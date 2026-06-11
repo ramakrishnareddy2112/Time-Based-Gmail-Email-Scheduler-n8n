@@ -1,0 +1,17 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# n8n local files
+.n8n/
+
+# Environment variables
+.env
+*.env
+
+# Temporary files
+*.tmp
+*.log
+
+# Node modules
+node_modules/
