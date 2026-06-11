@@ -1,0 +1,187 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -400,
+        -48
+      ],
+      "id": "d05c18ec-8ecb-472b-b2c9-e47887eba0c0",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1U-Eop28ZXLvzx8DPTfgreIuyNYDVngQqBoCdP3lZUz4",
+          "mode": "list",
+          "cachedResultName": "Untitled spreadsheet",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1U-Eop28ZXLvzx8DPTfgreIuyNYDVngQqBoCdP3lZUz4/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1U-Eop28ZXLvzx8DPTfgreIuyNYDVngQqBoCdP3lZUz4/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -192,
+        -48
+      ],
+      "id": "fb876894-774f-4463-bf91-ddc7c89e6c60",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "KW3R0od8zeo0gSar",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "dd482d60-4a7b-480c-a550-485d7835e7b1",
+              "leftValue": "={{ $json['Send status'] }}",
+              "rightValue": "SENT",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        16,
+        -48
+      ],
+      "id": "b2e93cc3-e428-45b1-aef4-aef8573455b5",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        240,
+        -64
+      ],
+      "id": "147e76f1-c863-4b04-97d0-edbb724b24a1",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1U-Eop28ZXLvzx8DPTfgreIuyNYDVngQqBoCdP3lZUz4",
+          "mode": "list",
+          "cachedResultName": "mailsheet",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1U-Eop28ZXLvzx8DPTfgreIuyNYDVngQqBoCdP3lZUz4/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 347522267,
+          "mode": "list",
+          "cachedResultName": "Sheet2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1U-Eop28ZXLvzx8DPTfgreIuyNYDVngQqBoCdP3lZUz4/edit#gid=347522267"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        448,
+        -176
+      ],
+      "id": "12caca84-8d10-4b0b-a559-45d579b2529e",
+      "name": "Get row(s) in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "KW3R0od8zeo0gSar",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Get row(s) in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "f42777e2-f3c9-48a6-a63b-280038bff742",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "21c9516c915a908a1c658fd8489f008685845460e2fd71831e473dce415331c7"
+  },
+  "id": "6IEAzEgBqkHGwOUL",
+  "tags": []
+}
